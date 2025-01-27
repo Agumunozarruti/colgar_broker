@@ -1,0 +1,24 @@
+# Ignorar archivos y directorios generados por Python y entorno virtual
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.typed
+/env/
+/include/
+/Lib/
+/Scripts/
+
+
+# Ignorar archivos y directorios generados por Pytest
+.__pycache__/
+.pytest_cache/
+.coverage
+.cache
+.mypy_cache/
+.hypothesis/
+
+# Ignorar archivos de configuracion
+*.cfg
+*.env
+.env.example
