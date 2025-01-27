@@ -1,0 +1,179 @@
+– 2. Escribe un script o conjunto de sentencias DDL que permita crear la base de datos
+con todas las tablas replicando el modelo relacional.
+
+create database arg_broker;
+
+use arg_broker;
+
+create table perfil_inversor(
+    id_perfil_inversor int auto_increment primary key,
+    nombre varchar(50) not null
+);
+
+create table tipos_documentos(
+    id_tipo_documento int auto_increment primary key,
+    tipo_documento varchar(20)
+);
+
+create table tipos_inversores(
+    id_tipo_inversor int auto_increment primary key,
+    tipo_inversor varchar(50) not null
+);
+
+create table tipos_transacciones (
+    id_tipo_transaccion int auto_increment primary key,
+    nombre_transaccion varchar(50)
+);
+
+create table inversores(
+    id_inversor int auto_increment primary key,
+    hashed_password varchar(60) not null,
+    documento varchar(20) unique,
+    email varchar(50) unique,
+    telefono varchar(20),
+    razon_social varchar(50),
+    id_perfil_inversor int,
+    id_tipo_documento int,
+    id_tipo_inversor int,
+    foreign key (id_perfil_inversor) references perfil_inversor(id_perfil_inversor),
+    foreign key (id_tipo_documento) references tipos_documentos(id_tipo_documento),
+    foreign key (id_tipo_inversor) references tipos_inversores(id_tipo_inversor)
+);
+
+create table cuentas (
+    id_cuenta INT AUTO_INCREMENT PRIMARY KEY,
+    numero_cuenta VARCHAR(20) UNIQUE NOT NULL,
+    saldo DECIMAL(10, 2) NOT NULL,
+    fecha_creacion DATE NOT NULL,
+    id_inversor INT,
+    FOREIGN KEY (id_inversor) REFERENCES inversores(id_inversor)
+);
+
+create table acciones(
+    id_accion int auto_increment primary key,
+    simbolo varchar(50) unique,
+    nombre_empresa varchar(50),
+    precio_compra DECIMAL(10, 2),
+    precio_venta DECIMAL(10, 2)
+);
+
+-- Tabla compuesta para almacenar las acciones compradas por cada inversor
+create table acciones_por_inversores(
+    id_inversor int,
+    id_accion int,
+    cantidad_acciones int,
+    precio_compra DECIMAL(10, 2), -- Nuevo campo para el precio de compra
+    precio_venta DECIMAL(10, 2),  -- Nuevo campo para el precio de venta
+    primary key (id_inversor, id_accion),
+    foreign key (id_inversor) references inversores(id_inversor),
+    foreign key (id_accion) references acciones(id_accion)
+);
+
+create table transacciones(
+    id_transaccion int auto_increment primary key,
+    cantidad_acciones int,
+    monto_total decimal(10, 2),
+    comision decimal(10,2),
+    fecha_hora datetime,
+    numero_cuenta varchar(20),
+    id_tipo_transaccion int,
+    id_accion int,
+    foreign key (numero_cuenta) references cuentas(numero_cuenta),
+    foreign key (id_tipo_transaccion) references tipos_transacciones(id_tipo_transaccion),
+    foreign key (id_accion) references acciones (id_accion)
+);
+
+-- Insertar datos en tablas de referencia
+
+INSERT INTO perfil_inversor values (1, "Pasivo");
+INSERT INTO perfil_inversor values (2, "Agresivo");
+
+INSERT INTO tipos_documentos values (1, "CUIL");
+INSERT INTO tipos_documentos values (2, "CUIT");
+INSERT INTO tipos_documentos values (3, "Pasaporte");
+
+INSERT INTO tipos_inversores values (1, "Persona Fisica");
+INSERT INTO tipos_inversores values (2, "Persona Juridica");
+
+INSERT INTO tipos_transacciones (id_tipo_transaccion, nombre_transaccion) VALUES (1, 'Compra'), (2,'Venta');
+
+INSERT INTO acciones (id_accion, simbolo, nombre_empresa, precio_compra, precio_venta) VALUES 
+(1, 'GGAL', 'Grupo Financiero Galicia', 500.00, 550.00),
+(2, 'YPFD', 'YPF S.A.', 800.50, 850.00),
+(3, 'BMA', 'Banco Macro S.A.', 900.75, 950.00),
+(4, 'TXAR', 'Ternium Argentina S.A.', 1200.00, 1250.00),
+(5, 'ALUA', 'Aluar Aluminio Argentino S.A.I.C.', 300.25, 320.00),
+(6, 'PAMP', 'Pampa Energía S.A.', 1500.10, 1550.00),
+(7, 'CRES', 'Cresud S.A.C.I.F. y A.', 600.00, 650.00),
+(8, 'COME', 'Sociedad Comercial del Plata S.A.', 180.00, 190.00),
+(9, 'CEPU', 'Central Puerto S.A.', 150.50, 160.00),
+(10, 'EDN', 'Edenor S.A.', 200.00, 210.00);
+
+-- Insertar en inversores
+
+INSERT INTO inversores (id_inversor, hashed_password, documento, email, telefono, razon_social, id_perfil_inversor, id_tipo_documento, id_tipo_inversor)
+VALUES 
+(1, 'Aldoaldo9*', '20207777772', 'minoldoaldo@gmail.com', '35155555555', 'Aldo', 2, 1, 1),
+(2, 'Juanjuan1*', '20222222222', 'juan@gmail.com', '35162826969', 'Juan Alvarez', 1, 1, 1);
+
+-- Insertar en cuentas
+
+INSERT INTO cuentas (id_cuenta, numero_cuenta, saldo, fecha_creacion, id_inversor)
+VALUES 
+(1, 'RCPCGNH1BYQGNUMNR54Z', 927221.25, '2024-10-23', 1),
+(2, 'VI0FWANKSQK7XARBFKGZ', 996038.50, '2024-10-25', 2);
+
+-- Insertar en acciones_por_inversores
+
+INSERT INTO acciones_por_inversores (id_inversor, id_accion, cantidad_acciones, precio_compra, precio_venta) 
+VALUES 
+(1, 1, 50, 500.00, 550.00),
+(1, 2, 50, 800.50, 850.00),
+(2, 2, 0, 800.50, 850.00);
+
+-- Ejemplo de inserción de datos en transacciones
+
+INSERT INTO transacciones (id_transaccion, cantidad_acciones, monto_total, comision, fecha_hora, numero_cuenta, id_tipo_transaccion, id_accion) 
+VALUES 
+(1, 10, 8000.50, 50.00, '2024-10-26 14:30:00', 'RCPCGNH1BYQGNUMNR54Z', 1, 1),
+(2, 5, 4500.00, 25.00, '2024-10-26 16:15:00', 'VI0FWANKSQK7XARBFKGZ', 2, 2);
+
+-- Actualizaciones de datos
+
+UPDATE cuentas SET saldo = saldo + 1000 WHERE numero_cuenta = 'RCPCGNH1BYQGNUMNR54Z';
+UPDATE inversores SET razon_social = 'Juan Perez' WHERE documento = '20222222222';
+UPDATE acciones SET precio_venta = 900 WHERE simbolo = 'YPFD';
+UPDATE inversores SET telefono = '35155555555' WHERE documento = '20207777772';
+UPDATE acciones SET nombre_empresa = 'Nueva YPF S.A' WHERE simbolo = 'YPFD';
+
+-- Consultas de selección
+
+SELECT * FROM inversores;
+SELECT saldo FROM cuentas WHERE numero_cuenta = 'RCPCGNH1BYQGNUMNR54Z';
+SELECT * FROM acciones WHERE precio_compra > 1000;
+SELECT * FROM transacciones WHERE date(fecha_hora) > '2024-01-01';
+SELECT razon_social, tipo_inversor FROM inversores i JOIN tipos_inversores t ON i.id_tipo_inversor = t.id_tipo_inversor;
+
+-- Consultas multitabla
+
+SELECT i.razon_social, a.simbolo, api.cantidad_acciones 
+FROM acciones_por_inversores api 
+JOIN inversores i ON api.id_inversor = i.id_inversor 
+JOIN acciones a ON api.id_accion = a.id_accion;
+
+SELECT t.id_transaccion, t.cantidad_acciones, t.monto_total, tt.nombre_transaccion, c.numero_cuenta 
+FROM transacciones t 
+JOIN tipos_transacciones tt ON t.id_tipo_transaccion = tt.id_tipo_transaccion 
+JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta;
+
+SELECT a.simbolo, i.razon_social,
+       SUM(t.monto_total) AS monto_total,
+       SUM(t.comision) AS total_comision,
+       1000000 AS valor_inicial,
+       (1000000 - SUM(t.monto_total) - SUM(t.comision)) AS rendimiento
+FROM transacciones t 
+INNER JOIN cuentas c ON t.numero_cuenta = c.numero_cuenta 
+INNER JOIN acciones a ON t.id_accion = a.id_accion
+INNER JOIN inversores i ON i.id_inversor = c.id_inversor
+WHERE c.id_cuenta = 2
+GROUP BY a.simbolo;      
