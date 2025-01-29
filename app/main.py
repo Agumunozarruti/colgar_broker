@@ -1,4 +1,4 @@
-from app.accesos.menu_principal import ejecutar_menu
+from accesos.menu_principal import ejecutar_menu
 
 
 def main():

@@ -1,7 +1,7 @@
-from app.controladores.cuenta_controlador import CuentaControlador
-from app.servicios_dao.inversor_dao import InversorDAO
-from app.accesos.menu_transacciones import ejecutar_menu_transacciones
-from app.accesos.utils import mostrar_titulo
+from controladores.cuenta_controlador import CuentaControlador
+from servicios_dao.inversor_dao import InversorDAO
+from accesos.menu_transacciones import ejecutar_menu_transacciones
+from accesos.utils import mostrar_titulo
 
 
 def ejecutar(inversor):

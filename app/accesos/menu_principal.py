@@ -1,6 +1,6 @@
-from app.controladores.inversor_controlador import InversorControlador
-from app.accesos.menu_cuenta import ejecutar
-from app.accesos.utils import mostrar_titulo
+from controladores.inversor_controlador import InversorControlador
+from accesos.menu_cuenta import ejecutar
+from accesos.utils import mostrar_titulo
 
 def ejecutar_menu():
     inversor_ctrl = InversorControlador()

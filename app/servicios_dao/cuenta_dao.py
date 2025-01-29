@@ -1,7 +1,7 @@
-from mysql.connector import Error
-from app.base_de_datos.conexion import Conexion
-from app.clases.interface_dao import InterfaceDAO
-from app.clases.transaccion import Transaccion
+from pymysql import Error
+from base_de_datos.conexion import Conexion
+from clases.interface_dao import InterfaceDAO
+from clases.transaccion import Transaccion
 
 
 class CuentaDAO(InterfaceDAO):

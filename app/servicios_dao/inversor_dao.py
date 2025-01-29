@@ -1,9 +1,9 @@
 import random
 import string
 from datetime import date
-from app.base_de_datos.conexion import Conexion
-from app.clases.inversor import Inversor
-from app.clases.interface_dao import InterfaceDAO
+from base_de_datos.conexion import Conexion
+from clases.inversor import Inversor
+from clases.interface_dao import InterfaceDAO
 
 class InversorDAO(InterfaceDAO):
 

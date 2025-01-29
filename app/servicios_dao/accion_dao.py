@@ -1,5 +1,5 @@
-from app.base_de_datos.conexion import Conexion
-from app.clases.interface_dao import InterfaceDAO
+from base_de_datos.conexion import Conexion
+from clases.interface_dao import InterfaceDAO
 from prettytable import PrettyTable
 
 class AccionesDAO(InterfaceDAO):

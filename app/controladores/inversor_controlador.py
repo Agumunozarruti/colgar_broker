@@ -1,5 +1,5 @@
-from app.clases.inversor import Inversor
-from app.servicios_dao.inversor_dao import InversorDAO
+from clases.inversor import Inversor
+from servicios_dao.inversor_dao import InversorDAO
 
 
 class InversorControlador():

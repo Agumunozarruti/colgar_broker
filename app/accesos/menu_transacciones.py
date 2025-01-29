@@ -1,4 +1,4 @@
-from app.accesos.utils import mostrar_titulo
+from accesos.utils import mostrar_titulo
 
 def ejecutar_menu_transacciones(cuenta_controlador, inversor, id_inversor):
     while True:

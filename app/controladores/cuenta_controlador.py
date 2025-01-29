@@ -1,12 +1,12 @@
 from datetime import datetime, date
-from app.servicios_dao.cuenta_dao import CuentaDAO
-from app.clases.cuenta import Cuenta
-from app.servicios_dao.accion_dao import AccionesDAO
+from servicios_dao.cuenta_dao import CuentaDAO
+from clases.cuenta import Cuenta
+from servicios_dao.accion_dao import AccionesDAO
 from decimal import Decimal
-from app.base_de_datos.conexion import Conexion
+from base_de_datos.conexion import Conexion
 import random
 from prettytable import PrettyTable
-from app.accesos.utils import mostrar_titulo
+from accesos.utils import mostrar_titulo
 
 class CuentaControlador:
     def __init__(self):
