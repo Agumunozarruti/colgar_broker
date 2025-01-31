@@ -72,22 +72,7 @@ class CuentaControlador:
                 fecha_formateada = fecha_creacion.strftime("%d-%m-%Y")
 
 
-            # print(f"Numero de Cuenta: {cuenta.get_numero_cuenta()}")
-            # print(f"Saldo: {cuenta.get_saldo()}")
-            # print((f"Fecha de Creacion de la Cuenta: {fecha_formateada}"))
-            #
-            # # Imprimir detalles de las transacciones si las hay
-            # if transacciones:
-            #     for transaccion in transacciones:
-            #         print(f" Razon Social: {transaccion.get_razon_social()},\n"
-            #               f" Simbolo: {transaccion.get_simbolo()},\n"
-            #               f" Monto Invertido $: {transaccion.get_monto_total()},\n"
-            #               f" Comisiónes $: {transaccion.get_comision()},\n"
-            #               f" Valor Inicial de Cuenta $: {transaccion.get_valor_inicial()},\n"
-            #               f" Rendimientos(incluye comisiones) $: {transaccion.get_rendimiento()}\n"
-            #               )
-            # else:
-            #     print("No hay transacciones para esta cuenta")
+          
 
             if transacciones:
                 # Calcular total invertido y rendimiento acumulado

@@ -2,9 +2,6 @@ import traceback
 import pymysql
 from pymysql import Error
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class Conexion:
     def __init__(self):
@@ -35,8 +32,6 @@ class Conexion:
             )
 
 
-            if self.conexion.open:
-                print("Conexión exitosa a la base de datos.")
 
         except Error as e:
             print(f"Error al conectar con la base de datos: {e}")
